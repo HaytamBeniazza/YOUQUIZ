@@ -1,0 +1,54 @@
+<app-modal>
+    <div class="text-center pt-5 block font-semibold text-2xl self-start text-white">
+        <h1 class="leading-relaxed">
+            {{subject.id != 0 ? 'Edit' : 'Add'}}
+            Subject
+        </h1>
+    </div>
+    <div class="hidden sm:block" aria-hidden="true">
+        <div class="py-5">
+            <div class="border-t border-orange-500"></div>
+        </div>
+    </div>
+    <form [formGroup]="subjectPopupForm" (ngSubmit)="submit()">
+        <div class="overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5">
+                <div class="flex w-full flex-col">
+                    <div class="w-full px-2 py-2">
+                        <label for="name" class="block mb-2 text-sm font-medium text-white dark:text-white">
+                            Write the name of the subject
+                        </label>
+                        <input type="text" formControlName="name"
+                            class="bg-orange-50 border border-orange-500 text-black text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 ">
+                    </div>
+                </div>
+            </div>
+            <div class="px-4 py-5">
+                <div class="flex w-full flex-col">
+                    <div class="w-full px-2 py-2">
+                        <label for="name" class="block mb-2 text-sm font-medium text-white dark:text-white">
+                            Write the name of the subject
+                        </label>
+                        <select formControlName="top_id"
+                            class="bg-orange-50 border border-orange-500 text-black text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 ">
+                            <option *ngFor="let top of subjects | async" value="{{top.id}}">{{top.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-4 pb-3 text-right  flex justify-around">
+                <button (click)="togglePopUp()" type="button" id="closeAddForm"
+                    class="inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-black shadow-sm ">
+                    Cancel
+                </button>
+                <button type="submit" [class.bg-orange-500]="subjectPopupForm.valid"
+                    [class.bg-gray-300]="!subjectPopupForm.valid"
+                    [disabled]="!subjectPopupForm.valid"
+                    class="inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white shadow-sm ">
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
+</app-modal>

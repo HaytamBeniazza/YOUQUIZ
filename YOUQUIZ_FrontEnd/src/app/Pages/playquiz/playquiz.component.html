@@ -1,0 +1,46 @@
+<div class="w-full flex justify-center align-middle bg-green-800/40 rounded-2xl">
+    <div class="bg-green-100/10 m-5 flex w-1/12 flex-col">
+        <div class="flex justify-center align-middle p-3"
+            *ngFor="let questionOfQuiz of quiz.questionOfQuizs; let i = index">
+            <span *ngIf="i>=questionNumber" class="bg-green-500 p-3 rounded-full text-white">
+                <span>N°{{i+1}}</span></span>
+            <span *ngIf="i<questionNumber" class="bg-white p-3 rounded">
+                ✓
+            </span>
+        </div>
+        <div></div>
+    </div>
+    <div class="relative bg-green-400/40 rounded-3xl m-5 w-11/12 h-96 justify-center align-middle flex">
+        <span class="absolute  right-4 top-4 z-20 bg-white rounded-full p-4">{{lefTime}}</span>
+        <div class="flex w-full p-5 justify-center align-middle gap-5">
+            <div class="w-2/5 align-middle flex flex-col justify-center">
+                <p class="text-2xl text-white text-center font-bold">{{question.question}}</p>
+                <div>
+                    <div *ngFor="let validation of question.validations; let i = index">
+                        <div class="flex justify-center align-middle">
+                            <span (click)="setValidation(validation)" [class.bg-yellow-300]="isResponseSelected(validation)"
+                                [class.bg-gray-100]="!isResponseSelected(validation)"
+                                class="cursor-pointer my-2 px-10 py-2 rounded-full border w-full">
+                                {{ validation.response.response }}
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center align-middle">
+                    <button type="button" (click)="nextquestion()" [disabled]="!answers[questionNumber]"
+                        class="bg-white hover:bg-gray-100 text-black font-bold py-1 px-5 border border-black rounded shadow">
+                        Next
+                    </button>
+                </div>
+            </div>
+            <div class="w-3/5 border rounded-2xl border-green-500/10 relative flex flex-row justify-center align-middle ">
+                <div class="w-full flex justify-center align-middle rounded-2xl"  *ngFor="let media of question.media; let i = index"
+                    [ngClass]="{'hidden': i !== selectedImage}">
+                    <img src="{{media.src}}" class="rounded-2xl w-full h-auto object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-alert (confirmed)="resest($event)"></app-alert>

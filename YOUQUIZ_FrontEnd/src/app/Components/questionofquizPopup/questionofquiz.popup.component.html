@@ -1,0 +1,54 @@
+<app-modal>
+    <div class="text-center pt-5 block font-semibold text-2xl self-start text-white">
+        <h1 class="leading-relaxed">
+            <!-- {{questionofquiz.id != 0 ? 'Edit' : 'Add'}} -->
+            Questionofquiz
+        </h1>
+    </div>
+    <div class="hidden sm:block" aria-hidden="true">
+        <div class="py-5">
+            <div class="border-t border-orange-500"></div>
+        </div>
+    </div>
+    <form [formGroup]="questionofquizPopupForm" (ngSubmit)="submit()">
+        <div class="overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5">
+                <div class="flex w-full flex-col">
+                    <div class="w-full px-2 py-2">
+                        <label for="name" class="block mb-2 text-sm font-medium text-white dark:text-white">
+                            Question
+                        </label>
+                        <select formControlName="question_id"
+                            class="bg-orange-50 border border-orange-500 text-black text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 ">
+                            <option *ngFor="let question of questions | async" value="{{question.id}}">
+                                {{question.question}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="w-full px-2 py-2">
+                        <label for="name" class="block mb-2 text-sm font-medium text-white dark:text-white">
+                            Quiz
+                        </label>
+                        <select formControlName="quiz_id"
+                            class="bg-orange-50 border border-orange-500 text-black text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 ">
+                            <option *ngFor="let quiz of quizzes | async" value="{{quiz.id}}">{{quiz.comment}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="px-4 pb-3 text-right  flex justify-around">
+                <button (click)="togglePopUp()" type="button" id="closeAddForm"
+                    class="inline-flex justify-center rounded-md border border-transparent bg-white py-2 px-4 text-sm font-medium text-black shadow-sm ">
+                    Cancel
+                </button>
+                <button type="submit" [class.bg-orange-500]="questionofquizPopupForm.valid"
+                    [class.bg-gray-300]="!questionofquizPopupForm.valid" [disabled]="!questionofquizPopupForm.valid"
+                    class="inline-flex justify-center rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm ">
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
+</app-modal>

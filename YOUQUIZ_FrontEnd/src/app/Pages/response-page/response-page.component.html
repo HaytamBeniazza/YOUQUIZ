@@ -1,0 +1,46 @@
+<section class="bg-white-50 white:bg-white-900 p-3 sm:p-5">
+    <div class="mx-auto px-4 lg:px-12">
+        <h1 class="text-2xl text-white font-bold mb-4">Response</h1>
+        <div class="bg-white dark:bg-green-900/90 relative shadow-md sm:rounded-lg overflow-hidden">
+            <div class="w-full md:w-1/2">
+                <form class="flex items-center">
+                    <div class="relative w-50">
+                        <button class="bg-green-900/90 border border-green-900=/90 text-white-900/90 text-sm focus:ring-primary-500 focus:border-primary-500 block w-full p-2 dark:bg-green-900 dark:border-green-900/90 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 font-bold" type="button" (click)="togglePopUp()">+</button>
+                    </div>
+                </form>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-white uppercase bg-green-50 dark:bg-green-600 dark:text-white">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">Id</th>
+                            <th scope="col" class="px-4 py-3">Response</th>
+                            <th scope="col" class="px-4 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let response of responses" class="border-b dark:border-gray-700">
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{response.id}}</th>
+                            <td class="px-4 py-3">{{response.response}}</td>
+                            <td class="flex gap-2 px-4 py-3">
+                                <div class="card flex justify-content-center w-14 h-6 bg-green-600 text-white justify-center rounded">
+                                    <button type="button" (click)="togglePopUp(response)">Edit</button>
+                                </div>
+                                <div class="card flex justify-content-center w-14 h-6 bg-red-800 text-white justify-center rounded">
+                                    <button (click)="delete(response)" type="button">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<app-response-popup  *ngIf="showPopup" [response]="response" (show)="showPopup=!showPopup"></app-response-popup>
+<app-alert  (confirmed)="delete(response, $event)" ></app-alert>

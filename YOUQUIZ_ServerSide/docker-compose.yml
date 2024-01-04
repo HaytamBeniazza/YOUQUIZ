@@ -1,0 +1,31 @@
+services:
+  postgresdb:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: WiQuizTime
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - cnx
+  app:
+    ports:
+      - 8080:8080
+    image: 'wiquiztime:latest'
+    build:
+      context: .
+    container_name: wiquiztimeApp
+    depends_on:
+      - postgresdb
+    networks:
+      - cnx
+volumes:
+  db:
+    driver: local
+networks:
+    cnx:
+        driver: bridge
